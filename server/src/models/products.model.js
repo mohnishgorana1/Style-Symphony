@@ -25,17 +25,14 @@ const productSchema = new Schema(
       enum: ["Male", "Female"],
       required: true,
     },
-    images: [
-      {
-        secure_url: {
-          type: String,
-        },
-        public_id: {
-          type: String,
-        },
-        z,
+    image: {
+      secure_url: {
+        type: String,
       },
-    ],
+      public_id: {
+        type: String,
+      },
+    },
   },
   { timestamps: true }
 );
