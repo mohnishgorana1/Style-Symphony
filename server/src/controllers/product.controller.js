@@ -6,8 +6,8 @@ import fs from "fs/promises";
 export const createProduct = async (req, res, next) => {
   const { name, description, category, price } = req.body;
 
-//   console.log(req.body);
-//   console.log(req.file);
+  //   console.log(req.body);
+  //   console.log(req.file);
   if (!name || !description || !price || !category) {
     return next(new AppError("All fields are required", 400));
   }
@@ -41,11 +41,12 @@ export const createProduct = async (req, res, next) => {
         fs.rm(`uploads/${req.file.filename}`);
       }
     } catch (e) {
-      new AppError(e || "Product Image File not uploaded please try again", 500);
+      new AppError(
+        e || "Product Image File not uploaded please try again",
+        500
+      );
     }
   }
-
- 
 
   await product.save();
 
@@ -54,4 +55,20 @@ export const createProduct = async (req, res, next) => {
     message: "Product Created Successfully",
     product,
   });
+};
+
+export const getAllProducts = async (req, res, next) => {
+  try {
+    const products = await Product.find({});
+
+    res.status(200).json({
+      success: true,
+      message: "All Courses",
+      products,
+    });
+  } catch (error) {
+    return next(
+      new AppError(e.message, "Something went wrong while fetching products")
+    );
+  }
 };
