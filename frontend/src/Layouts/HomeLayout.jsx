@@ -75,11 +75,8 @@ function HomeLayout({ children }) {
             )}
 
             <li>
-              <Link to="/courses">Male</Link>
-            </li>
-            <li>
-              <Link to="/courses">Female</Link>
-            </li>
+              <Link to="/products">Product</Link>
+            </li>  
             <li>
               <Link to="/contact">Contact Us</Link>
             </li>
