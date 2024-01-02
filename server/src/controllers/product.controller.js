@@ -72,3 +72,22 @@ export const getAllProducts = async (req, res, next) => {
     );
   }
 };
+
+export const getSingleProduct = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const product = await Product.findById(id);
+    if (!product) {
+      return next(new AppError("Invalid Product ID", 500));
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Product Fetched Successfully",
+      product
+    });
+  } catch (error) {
+    return next(new AppError(e.message, 500));
+  }
+};
