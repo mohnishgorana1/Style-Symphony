@@ -33,10 +33,31 @@ export const createProduct = createAsyncThunk(
   }
 );
 
+export const getAllProducts = createAsyncThunk("/products/get", async () => {
+  try {
+    const res = await axios.get("/api/v1/products");
+    if (res?.data?.success) {
+      toast.success("Products fetched Successfully");
+      return (await res).data.products; // ab data me sidha products jaenge
+    } else {
+      toast.error("No Product Found");
+    }
+  } catch (error) {
+    toast.error("Error Fetching Product! Api Error");
+  }
+});
+
 const productSlice = createSlice({
   name: "products",
   initialState,
   reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(getAllProducts.fulfilled, (state, action) => {
+      if (action?.payload) {
+        state.productsData = [...action.payload];
+      }
+    });
+  },
 });
 
 export default productSlice.reducer;
